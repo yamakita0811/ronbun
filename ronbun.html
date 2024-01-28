@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>論文提出カウントダウン</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #111;
+        color: rgb(255, 0, 0);
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-size: 20px;
+        background: linear-gradient(
+          180deg,
+          #111,
+          #ff0000b6,
+          rgb(117, 97, 97),
+          #222,
+          #6a4343
+        );
+        background-size: 100% 400%;
+        animation: backgroundAnimation 10s linear infinite;
+      }
+
+      @keyframes backgroundAnimation {
+        0% {
+          background-position: 0% 0%;
+        }
+        50% {
+          background-position: 0% 100%;
+        }
+        100% {
+          background-position: 0% 0%;
+        }
+      }
+
+      .container {
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgb(255, 17, 0);
+      }
+
+      .countdown {
+        font-size: 40px;
+        margin-bottom: 20px;
+      }
+
+      .pages {
+        font-size: 24px;
+        color: #ff0;
+      }
+
+      h2 {
+        color: #fff;
+      }
+    </style>
+
+    <script>
+      function updateCountdown() {
+        const deadlineGraduation = new Date(
+          "February 5, 2024 12:00:00"
+        ).getTime();
+        const deadlineMaster = new Date("February 7, 2024 12:00:00").getTime();
+        const now = new Date().getTime();
+
+        // 残り秒数の計算
+        const secondsLeftGraduation = Math.floor(
+          (deadlineGraduation - now) / 1000
+        );
+        const secondsLeftMaster = Math.floor((deadlineMaster - now) / 1000);
+
+        // 残り時間（秒数）の表示
+        document.getElementById("countdownGraduation").innerHTML =
+          secondsLeftGraduation + " 秒";
+        document.getElementById("countdownMaster").innerHTML =
+          secondsLeftMaster + " 秒";
+
+        // 必要な執筆ページ数の計算と表示
+        const pagesPerDayGrad = 30 / (secondsLeftGraduation / (60 * 60 * 24));
+        const pagesPerDayMaster = 40 / (secondsLeftMaster / (60 * 60 * 24));
+
+        document.getElementById("pagesGraduation").innerHTML =
+          "毎日約 " + pagesPerDayGrad.toFixed(2) + " ページ";
+        document.getElementById("pagesMaster").innerHTML =
+          "毎日約 " + pagesPerDayMaster.toFixed(2) + " ページ";
+      }
+
+      setInterval(updateCountdown, 1000);
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>卒業論文提出までの残り秒数</h2>
+      <p id="countdownGraduation" class="countdown"></p>
+      <p id="pagesGraduation" class="pages"></p>
+
+      <h2>修士論文提出までの残り秒数</h2>
+      <p id="countdownMaster" class="countdown"></p>
+      <p id="pagesMaster" class="pages"></p>
+    </div>
+  </body>
+</html>
