@@ -25,6 +25,35 @@
         );
         background-size: 100% 400%;
         animation: backgroundAnimation 10s linear infinite;
+        overflow: hidden;
+        position: relative;
+      }
+      .falling-text {
+        position: absolute;
+        color: #111;
+      }
+      @keyframes fall {
+        to {
+          transform: translateY(150vh);
+        }
+      }
+
+      .countdown,
+      .pages {
+        /* カウントダウンとページ数スタイル */
+        animation: pulse 1s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
       }
 
       @keyframes backgroundAnimation {
@@ -62,6 +91,43 @@
     </style>
 
     <script>
+      function createFallingText() {
+        const textElement = document.createElement("div");
+        textElement.classList.add("falling-text");
+
+        // テキスト内容をランダムに選択
+        const messages = [
+          "書け",
+          "書け",
+          "書け",
+          "書け",
+          "書け",
+          "書け",
+          "書け",
+          "書け",
+          "書け",
+          "書け", // "書け" をより多くして確率を下げる
+          "休息も大事",
+          "睡眠も大事",
+          "頑張ろう",
+        ]; // 確率を少なくするために、"書け" 以外を少なくする
+        const message = messages[Math.floor(Math.random() * messages.length)];
+        textElement.textContent = message;
+
+        textElement.style.left = Math.random() * window.innerWidth + "px";
+        textElement.style.animation = `fall ${
+          Math.random() * 5 + 3
+        }s linear forwards`;
+
+        document.body.appendChild(textElement);
+
+        // Remove element after it has fallen
+        setTimeout(() => {
+          document.body.removeChild(textElement);
+        }, 5000);
+      }
+
+      setInterval(createFallingText, 300); // Add falling text every 300ms
       function updateCountdown() {
         const deadlineGraduation = new Date(
           "February 5, 2024 12:00:00"
